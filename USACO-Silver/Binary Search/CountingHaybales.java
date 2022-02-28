@@ -1,26 +1,6 @@
 /*
 USACO 2016 December Contest, Silver
 Problem 1. Counting Haybales
-
-SAMPLE INPUT:
-4 6
-3 2 7 5
-2 3
-2 4
-2 5
-2 7
-4 6
-8 10
-SAMPLE OUTPUT:
-2
-2
-3
-4
-1
-0
-
-submission
-
 */
 import java.io.*;
 import java.util.*;
