@@ -34,7 +34,7 @@ public class ConnectingBarns {
                 X2 = Math.max(X2, end.get(i));
                 x2 = Math.min(x2, end.get(i));
             }
-            System.out.println(Math.min(Math.pow(X2-x1, 2), Math.pow(X1-x2, 2)));
+            System.out.println(Math.min(Math.abs(X2-x1), Math.abs(X1-x2)));
         }
     }
     static ArrayList<Integer> c(int k) {
