@@ -5,48 +5,43 @@
 import java.util.*;
 import java.lang.*;
 import java.io.*;
-class Interval {
+class C implements Comparable<C> {
     public int s, f;
-    public Interval(int s, int f) {
+    public C(int s, int f) {
         this.s = s;
         this.f = f;
     }
+    public int compareTo(C that) {
+        return this.s - that.s;
+    }
 }
 public class Lifeguards {
-    static Interval[] t;
+    static C[] t;
     static int N;
     public static void main(String args[]) {
         Scanner scan = new Scanner(System.in);
         N = scan.nextInt();
-        t = new Interval[N];
+        t = new C[N * 2];
         for (int i = 0; i < N; i++) {
-            t[i] = new Interval(scan.nextInt(), scan.nextInt());
+            t[i*2] = new C(scan.nextInt(), i);
+            t[i*2+1] = new C(scan.nextInt(), i);
         }
-        Arrays.sort(t, new Comparator<Interval>() {
-            public int compare(Interval one, Interval two) {
-                return one.s - two.s;
-            }
-        });
-        int tt = t[0].f - t[0].s; 
-        int st = t[0].s;
-        int ft = t[0].f;
-        int mt = Integer.MAX_VALUE;
-        for (int i = 1; i < N; i++) {
-            Interval cur = t[i];
-            ft = Math.max(ft, cur.f);
-            mt = Math.max(mt, 0);
-            if (ft >= cur.s) {
-                mt = Math.min(mt, cur.f - ft);
-                continue;
-            }
-            else {
-                tt += ft - st;
-                st = cur.s;
-                mt = Math.min(mt, cur.f - cur.s);
-            }
-
+        Arrays.sort(t);
+        int alone[] = new int[N];
+        int total = 0;
+        int last = 0;
+        int out = 0;
+        TreeSet<Integer> ts = new TreeSet<>();
+        for (int i = 0; i < N * 2; i++) {
+            if (ts.size() == 1) alone[ts.first()] += t[i].s - last;
+            if (!ts.isEmpty()) total += t[i].s - last;
+            if (ts.contains(t[i].f)) ts.remove(t[i].f);
+            else ts.add(t[i].f);
+            last = t[i].s;
         }
-        tt += ft - st;
-        System.out.println(tt - mt);
+        for (int i = 0; i < N; i++) {
+            out = Math.max(out, total - alone[i]);
+        }
+        System.out.println(out);
     }
 }
